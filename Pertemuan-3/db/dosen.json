@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nidn": "D001",
+    "nama": "Pak Syaifur Rohman",
+    "mata_kuliah": "Pemrograman Sisi Klien"
+  },
+  {
+    "id": 2,
+    "nidn": "D002",
+    "nama": "Pak Yogi",
+    "mata_kuliah": "Basis Data"
+  }
+]

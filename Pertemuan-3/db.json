@@ -1,0 +1,113 @@
+{
+  "dosen": [
+    {
+      "id": 1,
+      "nidn": "D001",
+      "nama": "Pak Syaifur Rohman",
+      "mata_kuliah": "Pemrograman Sisi Klien"
+    },
+    {
+      "id": 2,
+      "nidn": "D002",
+      "nama": "Pak Yogi",
+      "mata_kuliah": "Basis Data"
+    }
+  ],
+  "kelas": [
+    {
+      "id": 1,
+      "kode": "KLS001",
+      "nama": "Kelas A",
+      "mataKuliahId": 1,
+      "dosenId": 1,
+      "mahasiswaIds": [
+        1
+      ],
+      "kapasitas": 30
+    },
+    {
+      "id": 2,
+      "kode": "KLS002",
+      "nama": "Kelas B",
+      "mataKuliahId": 2,
+      "dosenId": 2,
+      "mahasiswaIds": [
+        1,
+        2
+      ],
+      "kapasitas": 25
+    }
+  ],
+  "mahasiswa": [
+    {
+      "id": 1,
+      "nama": "Andi",
+      "nim": "A11.2020.00001"
+    },
+    {
+      "id": 2,
+      "nama": "Budi",
+      "nim": "A11.2020.00002"
+    }
+  ],
+  "mata-kuliah": [
+    {
+      "id": 1,
+      "kode": "MK001",
+      "nama": "Pemrograman Sisi Klien",
+      "sks": 3
+    },
+    {
+      "id": 2,
+      "kode": "MK002",
+      "nama": "Basis Data",
+      "sks": 3
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "name": "Admin 1",
+      "email": "admin@mail.com",
+      "password": "admin123",
+      "role": "admin",
+      "permission": [
+        "dashboard.page",
+        "mahasiswa.page",
+        "mahasiswa.read",
+        "mahasiswa.create",
+        "mahasiswa.update",
+        "mahasiswa.delete",
+        "dosen.page",
+        "dosen.read",
+        "dosen.create",
+        "dosen.update",
+        "dosen.delete",
+        "mata-kuliah.page",
+        "mata-kuliah.read",
+        "mata-kuliah.create",
+        "mata-kuliah.update",
+        "mata-kuliah.delete",
+        "kelas.page",
+        "kelas.read",
+        "kelas.create",
+        "kelas.update",
+        "kelas.delete",
+        "user.page",
+        "user.read",
+        "user.update"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Mahasiswa 1",
+      "email": "mahasiswa@mail.com",
+      "password": "mahasiswa123",
+      "role": "mahasiswa",
+      "permission": [
+        "krs.page",
+        "krs.read"
+      ]
+    }
+  ]
+}

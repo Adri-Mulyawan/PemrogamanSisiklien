@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "kode": "KLS001",
+    "nama": "Kelas A",
+    "mataKuliahId": 1,
+    "dosenId": 1,
+    "mahasiswaIds": [1],
+    "kapasitas": 30
+  },
+  {
+    "id": 2,
+    "kode": "KLS002",
+    "nama": "Kelas B",
+    "mataKuliahId": 2,
+    "dosenId": 2,
+    "mahasiswaIds": [1, 2],
+    "kapasitas": 25
+  }
+]
