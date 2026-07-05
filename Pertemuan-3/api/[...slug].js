@@ -1,5 +1,9 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Koleksi data yang diizinkan (harus sama dengan nama file di folder db/)
 const VALID_COLLECTIONS = ["dosen", "kelas", "mahasiswa", "mata-kuliah", "user"];
@@ -10,7 +14,7 @@ let db = null;
 
 function loadDb() {
     if (db) return db;
-    const filePath = path.join(process.cwd(), "db.json");
+    const filePath = path.join(__dirname, "db.json");
     const raw = fs.readFileSync(filePath, "utf-8");
     db = JSON.parse(raw);
     return db;
