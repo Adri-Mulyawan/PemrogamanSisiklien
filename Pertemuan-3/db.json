@@ -1,67 +1,182 @@
 {
   "dosen": [
     {
-      "id": 1,
-      "nidn": "D001",
-      "nama": "Pak Syaifur Rohman",
-      "mata_kuliah": "Pemrograman Sisi Klien"
+      "id": "1",
+      "name": "Slamet",
+      "max_sks": 12
     },
     {
-      "id": 2,
-      "nidn": "D002",
-      "nama": "Pak Yogi",
-      "mata_kuliah": "Basis Data"
+      "id": "2",
+      "name": "Tini",
+      "max_sks": 10
+    },
+    {
+      "id": "3",
+      "name": "Udin",
+      "max_sks": 14
+    },
+    {
+      "id": "4",
+      "name": "Vina",
+      "max_sks": 16
+    },
+    {
+      "id": "5",
+      "name": "Wawan",
+      "max_sks": 8
     }
   ],
   "kelas": [
     {
-      "id": 1,
-      "kode": "KLS001",
-      "nama": "Kelas A",
-      "mataKuliahId": 1,
-      "dosenId": 1,
-      "mahasiswaIds": [
-        1
-      ],
-      "kapasitas": 30
-    },
-    {
-      "id": 2,
-      "kode": "KLS002",
-      "nama": "Kelas B",
-      "mataKuliahId": 2,
-      "dosenId": 2,
-      "mahasiswaIds": [
-        1,
-        2
-      ],
-      "kapasitas": 25
+      "id": "1",
+      "mata_kuliah_id": "1",
+      "dosen_id": "1",
+      "mahasiswa_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
     }
   ],
   "mahasiswa": [
     {
-      "id": 1,
+      "id": "1",
       "nama": "Andi",
-      "nim": "A11.2020.00001"
+      "nim": "M001",
+      "max_sks": 18
     },
     {
-      "id": 2,
+      "id": "2",
       "nama": "Budi",
-      "nim": "A11.2020.00002"
+      "nim": "M002",
+      "max_sks": 20
+    },
+    {
+      "id": "3",
+      "nama": "Citra",
+      "nim": "M003",
+      "max_sks": 22
+    },
+    {
+      "id": "4",
+      "nama": "Dina",
+      "nim": "M004",
+      "max_sks": 18
+    },
+    {
+      "id": "5",
+      "nama": "Eko",
+      "nim": "M005",
+      "max_sks": 24
+    },
+    {
+      "id": "6",
+      "nama": "Fajar",
+      "nim": "M006",
+      "max_sks": 21
+    },
+    {
+      "id": "7",
+      "nama": "Gita",
+      "nim": "M007",
+      "max_sks": 20
+    },
+    {
+      "id": "8",
+      "nama": "Hani",
+      "nim": "M008",
+      "max_sks": 18
+    },
+    {
+      "id": "9",
+      "nama": "Iwan",
+      "nim": "M009",
+      "max_sks": 20
+    },
+    {
+      "id": "10",
+      "nama": "Joko",
+      "nim": "M010",
+      "max_sks": 18
+    },
+    {
+      "id": "11",
+      "nama": "Kiki",
+      "nim": "M011",
+      "max_sks": 24
+    },
+    {
+      "id": "12",
+      "nama": "Lia",
+      "nim": "M012",
+      "max_sks": 20
+    },
+    {
+      "id": "13",
+      "nama": "Maya",
+      "nim": "M013",
+      "max_sks": 18
+    },
+    {
+      "id": "14",
+      "nama": "Nina",
+      "nim": "M014",
+      "max_sks": 22
+    },
+    {
+      "id": "15",
+      "nama": "Oki",
+      "nim": "M015",
+      "max_sks": 20
+    },
+    {
+      "id": "16",
+      "nama": "Putri",
+      "nim": "M016",
+      "max_sks": 18
+    },
+    {
+      "id": "17",
+      "nama": "Qila",
+      "nim": "M017",
+      "max_sks": 18
+    },
+    {
+      "id": "18",
+      "nama": "Rudi",
+      "nim": "M018",
+      "max_sks": 21
+    },
+    {
+      "id": "19",
+      "nama": "Salsa",
+      "nim": "M019",
+      "max_sks": 18
+    },
+    {
+      "id": "20",
+      "nama": "Tino",
+      "nim": "M020",
+      "max_sks": 18
     }
   ],
   "mata-kuliah": [
     {
-      "id": 1,
-      "kode": "MK001",
-      "nama": "Pemrograman Sisi Klien",
+      "id": "1",
+      "name": "Algoritma dan Pemrograman",
       "sks": 3
     },
     {
-      "id": 2,
-      "kode": "MK002",
-      "nama": "Basis Data",
+      "id": "2",
+      "name": "Basis Data",
       "sks": 3
+    },
+    {
+      "id": "3",
+      "name": "Jaringan Komputer",
+      "sks": 2
     }
   ],
   "user": [
@@ -88,11 +203,11 @@
         "mata-kuliah.create",
         "mata-kuliah.update",
         "mata-kuliah.delete",
-        "kelas.page",
-        "kelas.read",
-        "kelas.create",
-        "kelas.update",
-        "kelas.delete",
+        "rencana-studi.page",
+        "rencana-studi.read",
+        "rencana-studi.create",
+        "rencana-studi.update",
+        "rencana-studi.delete",
         "user.page",
         "user.read",
         "user.update"
@@ -105,8 +220,11 @@
       "password": "mahasiswa123",
       "role": "mahasiswa",
       "permission": [
-        "krs.page",
-        "krs.read"
+        "rencana-studi.page",
+        "rencana-studi.read",
+        "rencana-studi.create",
+        "rencana-studi.update",
+        "rencana-studi.delete"
       ]
     }
   ]

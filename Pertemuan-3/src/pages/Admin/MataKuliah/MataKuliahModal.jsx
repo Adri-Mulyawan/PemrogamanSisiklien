@@ -5,7 +5,7 @@ import Button from "@/pages/Auth/Components/Button";
 
 const MataKuliahModal = ({ isModalOpen, onClose, onSubmit, selectedMataKuliah }) => {
   const [form, setForm] = useState(() =>
-    selectedMataKuliah ?? { kode: "", nama: "", sks: "" }
+    selectedMataKuliah ?? { id: "", name: "", sks: "" }
   );
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ const MataKuliahModal = ({ isModalOpen, onClose, onSubmit, selectedMataKuliah })
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.kode || !form.nama || !form.sks) {
+    if (!form.name || !form.sks) {
       alert("Semua field wajib diisi");
       return;
     }
@@ -45,23 +45,11 @@ const MataKuliahModal = ({ isModalOpen, onClose, onSubmit, selectedMataKuliah })
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           <div>
-            <Label htmlFor="kode">Kode</Label>
+            <Label htmlFor="name">Nama</Label>
             <Input
               type="text"
-              name="kode"
-              value={form.kode}
-              onChange={handleChange}
-              placeholder="Masukkan Kode Mata Kuliah"
-              readOnly={selectedMataKuliah}
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="nama">Nama</Label>
-            <Input
-              type="text"
-              name="nama"
-              value={form.nama}
+              name="name"
+              value={form.name}
               onChange={handleChange}
               placeholder="Masukkan Nama Mata Kuliah"
               required

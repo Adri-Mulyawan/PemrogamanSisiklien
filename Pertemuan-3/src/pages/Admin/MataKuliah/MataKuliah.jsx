@@ -45,14 +45,13 @@ const MataKuliah = () => {
           setIsModalOpen(false);
         });
       } else {
-        const exists = mataKuliah.find((item) => item.kode === form.kode);
+        const exists = mataKuliah.find((item) => item.name.toLowerCase() === form.name.toLowerCase());
 
-        if (exists) {
-          toastError("Kode mata kuliah sudah terdaftar!");
-          return;
-        }
-
-        await addMataKuliah.mutateAsync(form);
+        const nextId = mataKuliah.length > 0 
+          ? String(Math.max(...mataKuliah.map((m) => Number(m.id) || 0)) + 1)
+          : "1";
+        
+        await addMataKuliah.mutateAsync({ ...form, id: nextId });
         toastSuccess("Data mata kuliah berhasil ditambahkan");
         setIsModalOpen(false);
       }

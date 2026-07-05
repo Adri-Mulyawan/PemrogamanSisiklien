@@ -52,14 +52,13 @@ const Dosen = () => {
           setIsModalOpen(false);
         });
       } else {
-        const exists = dosen.find((d) => d.nidn === form.nidn);
+        const exists = dosen.find((d) => d.name.toLowerCase() === form.name.toLowerCase());
 
-        if (exists) {
-          toastError("NIDN sudah terdaftar!");
-          return;
-        }
+        const nextId = dosen.length > 0 
+          ? String(Math.max(...dosen.map((m) => Number(m.id) || 0)) + 1)
+          : "1";
 
-        await addDosen.mutateAsync(form);
+        await addDosen.mutateAsync({ ...form, id: nextId });
         toastSuccess("Data dosen berhasil ditambahkan");
         setIsModalOpen(false);
       }

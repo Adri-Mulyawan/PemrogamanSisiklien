@@ -8,13 +8,13 @@ import { useMahasiswa } from "@/utils/Hooks/useMahasiswa";
 import Card from "@/pages/Admin/Components/Card";
 import Heading from "@/pages/Admin/Components/Heading";
 import Button from "@/pages/Admin/Components/Button";
-import KelasTable from "@/pages/Admin/Kelas/KelasTable";
-import KelasModal from "@/pages/Admin/Kelas/KelasModal";
+import RencanaStudiTable from "@/pages/Admin/RencanaStudi/RencanaStudiTable";
+import RencanaStudiModal from "@/pages/Admin/RencanaStudi/RencanaStudiModal";
 
 import { confirmDelete, confirmUpdate } from "@/utils/helpers/SwalHelpers";
 import { toastSuccess, toastError } from "@/utils/helpers/ToastHelpers";
 
-const Kelas = () => {
+const RencanaStudi = () => {
   const { user } = useAuthStateContext();
   const { data: kelas = [], isLoading, error, addKelas, editKelas, removeKelas } = useKelas();
   const { data: dosen = [] } = useDosen();
@@ -41,39 +41,45 @@ const Kelas = () => {
     try {
       // Validasi 1 MK = 1 Dosen
       // Cek apakah mata kuliah ini sudah diajar oleh dosen lain di kelas lain
-      const existingMkClass = kelas.find(k => Number(k.mataKuliahId) === Number(form.mataKuliahId) && k.id !== form.id);
-      if (existingMkClass && Number(existingMkClass.dosenId) !== Number(form.dosenId)) {
+      const existingMkClass = kelas.find(k => Number(k.mata_kuliah_id) === Number(form.mata_kuliah_id) && k.id !== form.id);
+      if (existingMkClass && Number(existingMkClass.dosen_id) !== Number(form.dosen_id)) {
         toastError("Mata Kuliah ini sudah diajarkan oleh Dosen lain di kelas lain!");
         return;
       }
 
       // Hitung total SKS Dosen
-      const mk = mataKuliah.find(m => Number(m.id) === Number(form.mataKuliahId));
+      const mk = mataKuliah.find(m => Number(m.id) === Number(form.mata_kuliah_id));
       const sksMk = mk ? Number(mk.sks) : 0;
       
-      const dosenClasses = kelas.filter(k => Number(k.dosenId) === Number(form.dosenId) && k.id !== form.id);
+      const dosenClasses = kelas.filter(k => Number(k.dosen_id) === Number(form.dosen_id) && k.id !== form.id);
       const currentDosenSks = dosenClasses.reduce((total, k) => {
-        const kMk = mataKuliah.find(m => Number(m.id) === Number(k.mataKuliahId));
+        const kMk = mataKuliah.find(m => Number(m.id) === Number(k.mata_kuliah_id));
         return total + (kMk ? Number(kMk.sks) : 0);
       }, 0);
 
-      if (currentDosenSks + sksMk > MAX_SKS_DOSEN) {
-        toastError(`Dosen melebihi batas maksimal ${MAX_SKS_DOSEN} SKS!`);
+      const selectedDosen = dosen.find(d => Number(d.id) === Number(form.dosen_id));
+      const maxSksDosen = selectedDosen ? Number(selectedDosen.max_sks) : MAX_SKS_DOSEN;
+
+      if (currentDosenSks + sksMk > maxSksDosen) {
+        toastError(`Dosen melebihi batas maksimal ${maxSksDosen} SKS!`);
         return;
       }
 
       // Validasi SKS tiap Mahasiswa
       const invalidMahasiswa = [];
-      const mhsIds = form.mahasiswaIds || [];
+      const mhsIds = form.mahasiswa_ids || [];
       for (let mId of mhsIds) {
         const mIdNumber = Number(mId);
-        const mhsClasses = kelas.filter(k => k.mahasiswaIds?.map(Number).includes(mIdNumber) && k.id !== form.id);
+        const mhsClasses = kelas.filter(k => k.mahasiswa_ids?.map(Number).includes(mIdNumber) && k.id !== form.id);
         const currentMhsSks = mhsClasses.reduce((total, k) => {
-          const kMk = mataKuliah.find(m => Number(m.id) === Number(k.mataKuliahId));
+          const kMk = mataKuliah.find(m => Number(m.id) === Number(k.mata_kuliah_id));
           return total + (kMk ? Number(kMk.sks) : 0);
         }, 0);
 
-        if (currentMhsSks + sksMk > MAX_SKS_MAHASISWA) {
+        const mhs = mahasiswa.find(m => Number(m.id) === mIdNumber);
+        const maxSksMhs = mhs ? Number(mhs.max_sks) : MAX_SKS_MAHASISWA;
+
+        if (currentMhsSks + sksMk > maxSksMhs) {
           invalidMahasiswa.push(mIdNumber);
         }
       }
@@ -85,9 +91,9 @@ const Kelas = () => {
 
       const submissionData = {
         ...form,
-        mataKuliahId: Number(form.mataKuliahId),
-        dosenId: Number(form.dosenId),
-        mahasiswaIds: form.mahasiswaIds.map(Number)
+        mata_kuliah_id: String(form.mata_kuliah_id),
+        dosen_id: String(form.dosen_id),
+        mahasiswa_ids: form.mahasiswa_ids.map(String)
       };
 
       if (selectedKelas) {
@@ -97,14 +103,11 @@ const Kelas = () => {
           setIsModalOpen(false);
         });
       } else {
-        const exists = kelas.find((item) => item.kode === form.kode);
+        const nextId = kelas.length > 0 
+          ? String(Math.max(...kelas.map((m) => Number(m.id) || 0)) + 1)
+          : "1";
 
-        if (exists) {
-          toastError("Kode kelas sudah terdaftar!");
-          return;
-        }
-
-        await addKelas.mutateAsync(submissionData);
+        await addKelas.mutateAsync({ ...submissionData, id: nextId });
         toastSuccess("Data kelas berhasil ditambahkan");
         setIsModalOpen(false);
       }
@@ -132,13 +135,13 @@ const Kelas = () => {
             Daftar Kelas
           </Heading>
 
-          {user?.permission?.includes("kelas.create") && (
+          {user?.permission?.includes("rencana-studi.create") && (
             <Button onClick={openAddModal}>+ Tambah Kelas</Button>
           )}
         </div>
 
-        {user?.permission?.includes("kelas.read") && (
-          <KelasTable
+        {user?.permission?.includes("rencana-studi.read") && (
+          <RencanaStudiTable
             kelas={kelas}
             dosen={dosen}
             mataKuliah={mataKuliah}
@@ -150,7 +153,7 @@ const Kelas = () => {
         )}
       </Card>
 
-      <KelasModal
+      <RencanaStudiModal
         key={isModalOpen ? selectedKelas?.id ?? "new" : "closed"}
         isModalOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -165,4 +168,4 @@ const Kelas = () => {
   );
 };
 
-export default Kelas;
+export default RencanaStudi;

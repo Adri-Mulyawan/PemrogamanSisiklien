@@ -19,7 +19,7 @@ import MahasiswaDetail from "@/pages/Admin/MahasiswaDetail/MahasiswaDetail";
 import Dosen from "@/pages/Admin/Dosen/Dosen";
 import MataKuliah from "@/pages/Admin/MataKuliah/MataKuliah";
 import User from "@/pages/Admin/User/User";
-import Kelas from "@/pages/Admin/Kelas/Kelas";
+import RencanaStudi from "@/pages/Admin/RencanaStudi/RencanaStudi";
 import PageNotFound from "@/pages/Error/PageNotFound";
 
 const router = createBrowserRouter([
@@ -75,8 +75,8 @@ const router = createBrowserRouter([
         element: <MataKuliah />,
       },
       {
-        path: "kelas",
-        element: <Kelas />,
+        path: "rencana-studi",
+        element: <RencanaStudi />,
       },
       {
         path: "user",

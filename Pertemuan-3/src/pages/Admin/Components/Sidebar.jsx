@@ -77,18 +77,20 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("kelas.page") && (
+
+
+        {user?.permission?.includes("rencana-studi.page") && (
           <NavLink
-            to="/admin/kelas"
+            to="/admin/rencana-studi"
             className={({ isActive }) =>
               `flex items-center space-x-2 px-4 py-2 rounded ${
                 isActive ? "bg-blue-700" : "hover:bg-blue-700"
               }`
             }
           >
-            <span>🏫</span>
+            <span>📚</span>
             <span className="menu-text hidden lg:inline">
-              Kelas
+              Rencana Studi
             </span>
           </NavLink>
         )}

@@ -86,11 +86,11 @@ const MahasiswaTable = ({
                   {pagination.paginatedData.map((mhs, index) => {
                     const mhsIdNumber = Number(mhs.id);
                     const mhsClasses = kelas.filter((k) =>
-                      k.mahasiswaIds?.map(Number).includes(mhsIdNumber)
+                      k.mahasiswa_ids?.map(Number).includes(mhsIdNumber)
                     );
                     const totalSks = mhsClasses.reduce((total, k) => {
                       const mk = mataKuliah.find(
-                        (m) => Number(m.id) === Number(k.mataKuliahId)
+                        (m) => Number(m.id) === Number(k.mata_kuliah_id)
                       );
                       return total + (mk ? Number(mk.sks) : 0);
                     }, 0);

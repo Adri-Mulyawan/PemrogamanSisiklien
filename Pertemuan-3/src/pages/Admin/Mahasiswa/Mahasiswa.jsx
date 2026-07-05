@@ -60,7 +60,11 @@ const Mahasiswa = () => {
           return;
         }
 
-        await addMahasiswa.mutateAsync(form);
+        const nextId = mahasiswa.length > 0 
+          ? String(Math.max(...mahasiswa.map((m) => Number(m.id) || 0)) + 1)
+          : "1";
+
+        await addMahasiswa.mutateAsync({ ...form, id: nextId });
         toastSuccess("Data berhasil ditambahkan");
         setIsModalOpen(false);
       }

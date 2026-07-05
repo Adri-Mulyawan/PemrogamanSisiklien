@@ -5,7 +5,7 @@ import Button from "@/pages/Auth/Components/Button";
 
 const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
   const [form, setForm] = useState(() =>
-    selectedDosen ?? { nidn: "", nama: "", mata_kuliah: "" }
+    selectedDosen ?? { id: "", name: "", max_sks: "" }
   );
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.nidn || !form.nama || !form.mata_kuliah) {
+    if (!form.name || !form.max_sks) {
       alert("Semua field wajib diisi");
       return;
     }
@@ -45,36 +45,24 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           <div>
-            <Label htmlFor="nidn">NIDN</Label>
+            <Label htmlFor="name">Nama</Label>
             <Input
               type="text"
-              name="nidn"
-              value={form.nidn}
+              name="name"
+              value={form.name}
               onChange={handleChange}
-              placeholder="Masukkan NIDN"
-              readOnly={selectedDosen}
+              placeholder="Masukkan Nama Dosen"
               required
             />
           </div>
           <div>
-            <Label htmlFor="nama">Nama</Label>
+            <Label htmlFor="max_sks">Max SKS</Label>
             <Input
-              type="text"
-              name="nama"
-              value={form.nama}
+              type="number"
+              name="max_sks"
+              value={form.max_sks}
               onChange={handleChange}
-              placeholder="Masukkan Nama"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="mata_kuliah">Mata Kuliah</Label>
-            <Input
-              type="text"
-              name="mata_kuliah"
-              value={form.mata_kuliah}
-              onChange={handleChange}
-              placeholder="Masukkan Mata Kuliah"
+              placeholder="Masukkan Max SKS"
               required
             />
           </div>

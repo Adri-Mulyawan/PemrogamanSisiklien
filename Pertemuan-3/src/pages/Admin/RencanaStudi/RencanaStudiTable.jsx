@@ -2,8 +2,9 @@ import Button from "@/pages/Admin/Components/Button";
 import Pagination from "@/pages/Admin/Components/Pagination";
 import { usePagination } from "@/utils/Hooks/usePagination";
 import { useTableFilter } from "@/utils/Hooks/useTableFilter";
+import { useAuthStateContext } from "@/utils/Contexts/AuthContext";
 
-const SEARCH_FIELDS = ["kode", "nama"];
+const SEARCH_FIELDS = ["id"];
 
 const SortIcon = ({ columnKey, sortConfig }) => {
   if (sortConfig.key !== columnKey) {
@@ -16,7 +17,7 @@ const SortIcon = ({ columnKey, sortConfig }) => {
   );
 };
 
-const KelasTable = ({
+const RencanaStudiTable = ({
   kelas = [],
   dosen = [],
   mataKuliah = [],
@@ -25,6 +26,7 @@ const KelasTable = ({
   openEditModal,
   onDelete,
 }) => {
+  const { user } = useAuthStateContext();
   const { searchQuery, setSearchQuery, sortConfig, handleSort, filteredAndSorted } =
     useTableFilter(kelas, SEARCH_FIELDS);
 
@@ -50,7 +52,7 @@ const KelasTable = ({
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari Kode atau Nama Kelas..."
+                searchPlaceholder="Cari ID Kelas..."
               />
               <p className="p-4 text-sm text-slate-500">
                 Tidak ada data yang cocok dengan pencarian &quot;{searchQuery}&quot;.
@@ -63,15 +65,9 @@ const KelasTable = ({
                   <tr>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("kode")}
+                      onClick={() => handleSort("id")}
                     >
-                      Kode <SortIcon columnKey="kode" sortConfig={sortConfig} />
-                    </th>
-                    <th
-                      className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("nama")}
-                    >
-                      Nama <SortIcon columnKey="nama" sortConfig={sortConfig} />
+                      ID <SortIcon columnKey="id" sortConfig={sortConfig} />
                     </th>
                     <th className="py-2 px-4 text-left">Mata Kuliah</th>
                     <th className="py-2 px-4 text-left">Dosen</th>
@@ -82,27 +78,30 @@ const KelasTable = ({
 
                 <tbody>
                   {pagination.paginatedData.map((item, index) => {
-                    const dsn = dosen.find((d) => Number(d.id) === Number(item.dosenId));
-                    const mk = mataKuliah.find((m) => Number(m.id) === Number(item.mataKuliahId));
-                    const countMhs = item.mahasiswaIds ? item.mahasiswaIds.length : 0;
+                    const dsn = dosen.find((d) => Number(d.id) === Number(item.dosen_id));
+                    const mk = mataKuliah.find((m) => Number(m.id) === Number(item.mata_kuliah_id));
+                    const countMhs = item.mahasiswa_ids ? item.mahasiswa_ids.length : 0;
 
                     return (
                       <tr
                         key={item.id}
                         className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
                       >
-                        <td className="py-2 px-4">{item.kode}</td>
-                        <td className="py-2 px-4">{item.nama}</td>
-                        <td className="py-2 px-4">{mk ? mk.nama : "-"}</td>
-                        <td className="py-2 px-4">{dsn ? dsn.nama : item.dosen || "-"}</td>
-                        <td className="py-2 px-4">{countMhs} / {item.kapasitas}</td>
+                        <td className="py-2 px-4">{item.id}</td>
+                        <td className="py-2 px-4">{mk ? mk.name : "-"}</td>
+                        <td className="py-2 px-4">{dsn ? dsn.name : item.dosen || "-"}</td>
+                        <td className="py-2 px-4">{countMhs}</td>
                         <td className="py-2 px-4 text-center space-x-2">
-                          <Button size="sm" variant="warning" onClick={() => openEditModal(item)}>
-                            Edit
-                          </Button>
-                          <Button size="sm" variant="danger" onClick={() => onDelete(item.id)}>
-                            Hapus
-                          </Button>
+                          {user?.permission?.includes("rencana-studi.update") && (
+                            <Button size="sm" variant="warning" onClick={() => openEditModal(item)}>
+                              Edit
+                            </Button>
+                          )}
+                          {user?.permission?.includes("rencana-studi.delete") && (
+                            <Button size="sm" variant="danger" onClick={() => onDelete(item.id)}>
+                              Hapus
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     );
@@ -114,7 +113,7 @@ const KelasTable = ({
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari Kode atau Nama Kelas..."
+                searchPlaceholder="Cari ID Kelas..."
               />
             </>
           )}
@@ -124,4 +123,4 @@ const KelasTable = ({
   );
 };
 
-export default KelasTable;
+export default RencanaStudiTable;

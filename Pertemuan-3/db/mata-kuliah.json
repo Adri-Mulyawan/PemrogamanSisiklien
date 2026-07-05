@@ -1,14 +1,5 @@
 [
-  {
-    "id": 1,
-    "kode": "MK001",
-    "nama": "Pemrograman Sisi Klien",
-    "sks": 3
-  },
-  {
-    "id": 2,
-    "kode": "MK002",
-    "nama": "Basis Data",
-    "sks": 3
-  }
+  { "id": "1", "name": "Algoritma dan Pemrograman", "sks": 3 },
+  { "id": "2", "name": "Basis Data", "sks": 3 },
+  { "id": "3", "name": "Jaringan Komputer", "sks": 2 }
 ]

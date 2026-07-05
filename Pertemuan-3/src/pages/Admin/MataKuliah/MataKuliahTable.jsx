@@ -3,7 +3,7 @@ import Pagination from "@/pages/Admin/Components/Pagination";
 import { usePagination } from "@/utils/Hooks/usePagination";
 import { useTableFilter } from "@/utils/Hooks/useTableFilter";
 
-const SEARCH_FIELDS = ["kode", "nama", "sks"];
+const SEARCH_FIELDS = ["id", "name", "sks"];
 
 const SortIcon = ({ columnKey, sortConfig }) => {
   if (sortConfig.key !== columnKey) {
@@ -42,7 +42,7 @@ const MataKuliahTable = ({ mataKuliah = [], loading, error, openEditModal, onDel
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari Kode, Nama, atau SKS..."
+                searchPlaceholder="Cari ID, Nama, atau SKS..."
               />
               <p className="p-4 text-sm text-slate-500">
                 Tidak ada data yang cocok dengan pencarian &quot;{searchQuery}&quot;.
@@ -55,15 +55,15 @@ const MataKuliahTable = ({ mataKuliah = [], loading, error, openEditModal, onDel
                   <tr>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("kode")}
+                      onClick={() => handleSort("id")}
                     >
-                      Kode <SortIcon columnKey="kode" sortConfig={sortConfig} />
+                      ID <SortIcon columnKey="id" sortConfig={sortConfig} />
                     </th>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("nama")}
+                      onClick={() => handleSort("name")}
                     >
-                      Nama <SortIcon columnKey="nama" sortConfig={sortConfig} />
+                      Nama <SortIcon columnKey="name" sortConfig={sortConfig} />
                     </th>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
@@ -81,8 +81,8 @@ const MataKuliahTable = ({ mataKuliah = [], loading, error, openEditModal, onDel
                       key={item.id}
                       className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
                     >
-                      <td className="py-2 px-4">{item.kode}</td>
-                      <td className="py-2 px-4">{item.nama}</td>
+                      <td className="py-2 px-4">{item.id}</td>
+                      <td className="py-2 px-4">{item.name}</td>
                       <td className="py-2 px-4">{item.sks}</td>
                       <td className="py-2 px-4 text-center space-x-2">
                         <Button size="sm" variant="warning" onClick={() => openEditModal(item)}>
@@ -101,7 +101,7 @@ const MataKuliahTable = ({ mataKuliah = [], loading, error, openEditModal, onDel
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari Kode, Nama, atau SKS..."
+                searchPlaceholder="Cari ID, Nama, atau SKS..."
               />
             </>
           )}

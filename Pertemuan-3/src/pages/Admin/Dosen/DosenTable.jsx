@@ -3,7 +3,7 @@ import Pagination from "@/pages/Admin/Components/Pagination";
 import { usePagination } from "@/utils/Hooks/usePagination";
 import { useTableFilter } from "@/utils/Hooks/useTableFilter";
 
-const SEARCH_FIELDS = ["nidn", "nama"];
+const SEARCH_FIELDS = ["id", "name", "max_sks"];
 
 const SortIcon = ({ columnKey, sortConfig }) => {
   if (sortConfig.key !== columnKey) {
@@ -42,7 +42,7 @@ const DosenTable = ({ dosen = [], loading, error, openEditModal, onDelete }) => 
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari NIDN atau Nama Dosen..."
+                searchPlaceholder="Cari ID, Nama, atau Max SKS..."
               />
               <p className="p-4 text-sm text-slate-500">
                 Tidak ada data yang cocok dengan pencarian &quot;{searchQuery}&quot;.
@@ -55,17 +55,22 @@ const DosenTable = ({ dosen = [], loading, error, openEditModal, onDelete }) => 
                   <tr>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("nidn")}
+                      onClick={() => handleSort("id")}
                     >
-                      NIDN <SortIcon columnKey="nidn" sortConfig={sortConfig} />
+                      ID <SortIcon columnKey="id" sortConfig={sortConfig} />
                     </th>
                     <th
                       className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
-                      onClick={() => handleSort("nama")}
+                      onClick={() => handleSort("name")}
                     >
-                      Nama <SortIcon columnKey="nama" sortConfig={sortConfig} />
+                      Nama <SortIcon columnKey="name" sortConfig={sortConfig} />
                     </th>
-                    <th className="py-2 px-4 text-left">Mata Kuliah</th>
+                    <th
+                      className="py-2 px-4 text-left cursor-pointer select-none hover:bg-blue-700 transition-colors"
+                      onClick={() => handleSort("max_sks")}
+                    >
+                      Max SKS <SortIcon columnKey="max_sks" sortConfig={sortConfig} />
+                    </th>
                     <th className="py-2 px-4 text-center">Aksi</th>
                   </tr>
                 </thead>
@@ -76,9 +81,9 @@ const DosenTable = ({ dosen = [], loading, error, openEditModal, onDelete }) => 
                       key={item.id}
                       className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
                     >
-                      <td className="py-2 px-4">{item.nidn}</td>
-                      <td className="py-2 px-4">{item.nama}</td>
-                      <td className="py-2 px-4">{item.mata_kuliah}</td>
+                      <td className="py-2 px-4">{item.id}</td>
+                      <td className="py-2 px-4">{item.name}</td>
+                      <td className="py-2 px-4">{item.max_sks}</td>
                       <td className="py-2 px-4 text-center space-x-2">
                         <Button size="sm" variant="warning" onClick={() => openEditModal(item)}>
                           Edit
@@ -96,7 +101,7 @@ const DosenTable = ({ dosen = [], loading, error, openEditModal, onDelete }) => 
                 {...pagination}
                 searchQuery={searchQuery}
                 onSearch={setSearchQuery}
-                searchPlaceholder="Cari NIDN atau Nama Dosen..."
+                searchPlaceholder="Cari ID, Nama, atau Max SKS..."
               />
             </>
           )}

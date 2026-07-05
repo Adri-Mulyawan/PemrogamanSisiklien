@@ -23,7 +23,13 @@ export const register = async (data) => {
         email,
         password,
         role: "mahasiswa",
-        permission: ["krs.page", "krs.read"],
+        permission: [
+            "rencana-studi.page",
+            "rencana-studi.read",
+            "rencana-studi.create",
+            "rencana-studi.update",
+            "rencana-studi.delete"
+        ],
     };
 
     const res = await axios.post("/user", user);
